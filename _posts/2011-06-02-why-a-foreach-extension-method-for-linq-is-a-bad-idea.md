@@ -1,0 +1,10 @@
+---
+layout: post
+title:  "Why a 'foreach' extension method for LINQ is a bad idea"
+date:   2011-06-02 19:59:34
+categories: C# LINQ
+---
+
+I often wondered why LINQ to Objects does not contain a “ForEach” extension method like the generic List class does. After being hit by stupid bugs of my own twice in the last week, I think I have the answer why L2O was designed in that way and why List contains one. So consider this: What is the fundamental difference between all other L2O operators and ForEach ? All normal LINQ operators model a computation of a sequence, either standalone or as a combination of multiple computations.
+This computation is stateless,the sequence is only materialized when we actually evaluate the tree of computations we have combined so far. This means if the LINQ query creates objects along the way, we will get different ones for each evaluation of the query. So what is the difference with ForEach then ? Simply ForEach implies evaluation of the computation! This falls outside of the normal LINQ model, because now we are not dealing with computations anymore but with the results of such a computation. We effectively now have a mixture of both stateless and stateful ( by allowing us to change the invidual data contained in sequence we’re computing )
+operations, and it is much to easy to forget that in our ForEach operator we have to deal with the implications of that, e.g that two different ForEach calls can receive different data, and we must not impose side effects on that data, because in the next evaluation those side effects will be gone again. That’s why it’s not ok to have a ForEach Linq operator, but it’s perfectly alright for List because List is not a stateless sequence in the LINQ sense, but an already evaluated one, that will not return different data between iterations ! So delete those nasty ForEach extensions methods again, because believe me tracing this kind of bug over a few hundred methods is not a fun thing to do…

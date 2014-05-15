@@ -1,0 +1,20 @@
+---
+layout: post
+title:  "Visual Studio 2012 Beta2 impressions"
+date:   2009-06-13 19:59:34
+categories: VisualStudio C# NET
+---
+
+Beta 2 of Visual Studio 2010 has arrived and is available for download for just about anyone to grab. I’ve played around with this release for a week now ( Msdn release was a few days prior to public availability ) and so far my feelings are best described in romantic terms: Love at first sight. There are so many great features/improvements that I just don’t know where to begin, but I’ll try anyway. For the first time since Visual Studio 6 back in the 90s, online help is fast again. Microsoft rewrote the complete help system and based it around a small local Web server that serves Javascript enriched help content. Hovering on some identifier, pressing F1 and waiting for the new context sensitve help to pop up takes about 0.5 seconds on my local machine. TFS Basic is great. I stayed clear of TeamFoundation server for the last releases since my initial evaluation turned out that it did not offer much over other tools, but required insane ammounts of hardware and installation/administration effort that just were not easily recouped by it’s functionality. TFS Basic installs easy, fast ( 20 minutes for me without any error whatsoever ) and runs even on client OS editions if you’re into that. UML Modelling support has finally arrived, of course it’s the first release, and code generation support seems not to be on the agenda, but for some fast and simple diagramming it’s certainly enough. The C++ compiler supports a few things from the upcoming revised standard, like the auto keyword, lambda functions and nullptr. TR1 support has also matured and so we can write even better standard compliant code right now. Performance of C++ intellisense seems also much better, especially with larger codebases. Also C++ finally uses Msbuild for it’s build system as well as project files. So codebases that mix C++ with C# are now much easier to handle in build environments.
+
+For C# we have of course the new dynamic dispatch features, as well as optional and named parameters, and better co/contravariance support for generics. I still don’t like dynamic dispatch support, simply because I think it will be used for all the wrong reasons, and because it throws out a lot of the investment in static source code analysis technology, and proofing program correctness. On the runtime side of things, of course we have additions to WCF/WPF a completly rewritten Workflow Foundation, and many other small things like a few conveniance methods ( string.IsNullOrWhiteSpace ). The Task Parallel library is a godsend, but I am still in fear of it’s usage patterns. I see a lot of developers who are not experienced in multithreading just use things like Parallel.ForEach or PLINQ because it’s so damn easy thereby ignoring the concurrency issues, producing code that will just fail at unpredictable times.
+
+At least we have some by default threadsafe collections now, but the performance implications of those must not be overlooked, collections are rarely the right place for some last effort “catch all” synchronization.
+
+Things like native support for Memory Mapped files, the inclusion of Code Contracts which were previously available as an addon, as well as conveniance data structures like tuples or sets round off the framework itself.
+
+The client GC can now do parallel garbage collections under certain circumstances ( during full collections a certain number of allocations can be still be done while the collection is running ).
+
+The server GC does not support this apparently because of lack of development time, which is really not nice, since especially there it would have resolved certain issues in long running applications that have bitten me in the past.
+
+Last but not least ADO.NET Entity Framework is in it’s second release, supports forward engineering finally, and generally seems much more mature now, time to take it for a spin in the next few days. All in all a great release, and the nice WPF UI of Visual Studio just make working that little extra spicy, so in conclusion: I really like it !

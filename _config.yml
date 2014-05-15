@@ -1,0 +1,16 @@
+# Site settings
+title: The zen of dev
+author: Bernhard Glück
+email: business@bernhardglueck.com
+description: "Musings about software engineering, some interesting, some certainly not!"
+baseurl: ""
+url: "http://www.bernhardglueck.com"
+twitteruser: Gluber
+githubuser: BernhardGlueck
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+excerpt_separator: --excerptend
+paginate: 5
